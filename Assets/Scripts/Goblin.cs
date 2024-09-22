@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Goblin : MonoBehaviour
@@ -19,19 +20,19 @@ public class Goblin : MonoBehaviour
 
     private void Start()
     {
-
     }
 
     void Update()
     {
-        searchGold();
+        allObjects = GameObject.FindGameObjectsWithTag("gold");
 
-        while (isSearching == true)
+        if (Input.GetKeyDown(KeyCode.Space)) { searchGold(); }
+        if (isSearching == true && nearestObject != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, nearestObject.transform.position, movementSpeed * Time.deltaTime);
         }
 
-        while (isStoring == true)
+        if (isStoring == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, goblinHouse.transform.position, movementSpeed * Time.deltaTime);
         }
@@ -40,8 +41,6 @@ public class Goblin : MonoBehaviour
 
     public void searchGold()
     {
-        allObjects = GameObject.FindGameObjectsWithTag("gold");
-
         for (int i = 0; i < allObjects.Length; i++)
         {
             distance = Vector3.Distance(this.transform.position, allObjects[i].transform.position);
@@ -49,17 +48,22 @@ public class Goblin : MonoBehaviour
             if (distance < nearestDistance)
             {
                 nearestObject = allObjects[i];
+                nearestDistance = distance;
             }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        isSearching = false;
-        isStoring = true;
-        goldCount++;
-        Debug.Log(goldCount);
-        Destroy(other.gameObject);
+        if (other.gameObject.tag == "gold") {
+            isSearching = false;
+            isStoring = true;
+            goldCount++;
+            Debug.Log(goldCount);
+
+            Destroy(other.gameObject);
+        }
+        
     }
 
 }

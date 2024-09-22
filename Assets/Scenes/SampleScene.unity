@@ -3515,7 +3515,7 @@ MonoBehaviour:
   allObjects: []
   nearestObject: {fileID: 0}
   goblinHouse: {fileID: 1251635445}
-  isSearching: 0
+  isSearching: 1
   isStoring: 0
   goldCount: 0
 --- !u!114 &1911778602
