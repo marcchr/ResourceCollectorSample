@@ -15,7 +15,7 @@ public class MoveObject : MonoBehaviour
 
     private void Start()
     {
-        randomPoint = new Vector2(Random.Range(-8.5f, 8.5f), Random.Range(-3.5f, 2.5f));
+        randomPoint = new Vector2(Random.Range(-8.5f, 8.5f), Random.Range(-3.5f, 2f));
     }
 
     private void Update()

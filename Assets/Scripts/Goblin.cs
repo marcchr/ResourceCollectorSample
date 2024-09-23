@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Goblin : MonoBehaviour
 {
+    // public List<GameObject> allObjects;
     public GameObject[] allObjects;
     public GameObject nearestObject;
     public GameObject goblinHouse;
@@ -13,6 +14,7 @@ public class Goblin : MonoBehaviour
     float nearestDistance = 10000;
     float movementSpeed = 2f;
     public bool isSearching = true;
+    public bool isMoving = false;
     public bool isStoring = false;
 
     public int goldCount;
@@ -26,8 +28,20 @@ public class Goblin : MonoBehaviour
     {
         allObjects = GameObject.FindGameObjectsWithTag("gold");
 
-        if (Input.GetKeyDown(KeyCode.Space)) { searchGold(); }
-        if (isSearching == true && nearestObject != null)
+        /*
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("gold"))
+        {
+            allObjects.Add(obj);
+        }
+        */
+
+        if (isSearching == true &&  allObjects.Length > 0 )
+        {
+            searchGold();
+        }
+
+        // if (Input.GetKeyDown(KeyCode.Space)) { searchGold(); }
+        if (isMoving == true && nearestObject != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, nearestObject.transform.position, movementSpeed * Time.deltaTime);
         }
@@ -51,19 +65,31 @@ public class Goblin : MonoBehaviour
                 nearestDistance = distance;
             }
         }
+        isSearching = false;
+        isMoving = true;
+        if (nearestObject != null) { nearestObject.gameObject.tag = "goldToPick"; }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "gold") {
-            isSearching = false;
+        if (other.gameObject.tag == "goldToPick") {
+            isMoving = false;
             isStoring = true;
-            goldCount++;
-            Debug.Log(goldCount);
-
+            goblinHouse.GetComponent<Collider2D>().enabled = true;
             Destroy(other.gameObject);
         }
         
+        if (other.gameObject.tag == "goblinHut")
+        {
+            goblinHouse.GetComponent<Collider2D>().enabled = false;
+            isStoring = false;
+            isSearching = true;
+            goldCount++;
+            Debug.Log(goldCount);
+
+
+        }
     }
 
 }
