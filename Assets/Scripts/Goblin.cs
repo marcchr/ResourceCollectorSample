@@ -27,6 +27,7 @@ public class Goblin : MonoBehaviour
 
     void Update()
     {
+
         allObjects = GameObject.FindGameObjectsWithTag("gold");
 
         // GameObject obj = GameObject.FindGameObjectWithTag("gold");
