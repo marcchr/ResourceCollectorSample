@@ -2179,7 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786482a414ad5c84cbfa30e15c35d7d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnInterval: 10
+  spawnInterval: 5
   goblin: {fileID: 1911778601}
   goldPrefab: {fileID: 6186377128825966318, guid: c529e59c0b840474b9f4a4b48c6d7e4c, type: 3}
 --- !u!1 &879447160
@@ -3676,7 +3676,6 @@ GameObject:
   - component: {fileID: 1911778597}
   - component: {fileID: 1911778600}
   - component: {fileID: 1911778601}
-  - component: {fileID: 1911778602}
   - component: {fileID: 1911778603}
   m_Layer: 0
   m_Name: Goblin
@@ -3767,7 +3766,7 @@ Transform:
   m_GameObject: {fileID: 1911778596}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.08, y: -2.75, z: 0}
+  m_LocalPosition: {x: 4.82, y: -0.54, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3825,22 +3824,12 @@ MonoBehaviour:
   nearestObject: {fileID: 0}
   goblinHouse: {fileID: 1251635445}
   _animator: {fileID: 1911778597}
+  idleArea: {fileID: 0}
   isSearching: 1
   isMoving: 0
   isStoring: 0
+  isRight: 1
   goldCount: 0
---- !u!114 &1911778602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911778596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bcbed8ad90cdc64894fe00bd7acb0ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &1911778603
 Rigidbody2D:
   serializedVersion: 4

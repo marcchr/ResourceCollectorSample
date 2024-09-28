@@ -21,6 +21,7 @@ public class Goblin : MonoBehaviour
     public bool isMoving = false;
     public bool isStoring = false;
 
+    public bool isRight = false;
     public int goldCount;
 
 
@@ -45,13 +46,41 @@ public class Goblin : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, nearestObject.transform.position, movementSpeed * Time.deltaTime);
             _animator.SetBool("isWalking", true);
+            if (nearestObject.transform.position.x - transform.position.x < 0)
+            {
+                isRight = false;
+                Flip();
+            }
+            else
+            {
+                isRight = true;
+                Flip();
+            }
         }
 
         if (isStoring == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, goblinHouse.transform.position, movementSpeed * Time.deltaTime);
             _animator.SetBool("isWalking", true);
+            if (goblinHouse.transform.position.x - transform.position.x < 0)
+            {
+                isRight = false;
+                Flip();
+            }
+            else {
+                isRight = true;
+                Flip();
+            }
         }
+
+    }
+
+    void Flip()
+    {
+
+            Vector3 theScale = transform.localScale;
+            theScale.x = isRight? 1:-1;
+            transform.localScale = theScale;
 
     }
 
