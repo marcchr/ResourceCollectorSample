@@ -27,7 +27,7 @@ public class GoldSpawn : MonoBehaviour
     {
         var gold = Instantiate(goldPrefab, transform.position, Quaternion.identity);
         gold.spawnArea = transform;
-        // goblin.allObjects.Add(gold);
+        //goblin.allObjects.Add(gold);
     }
 
     

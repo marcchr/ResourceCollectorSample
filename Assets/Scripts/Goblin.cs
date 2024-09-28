@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Goblin : MonoBehaviour
 {
-    // public List<GameObject> allObjects;
     public GameObject[] allObjects;
+    //public List<GameObject> gameObjectList = new List<GameObject>(allObjects);
+
     public GameObject nearestObject;
     public GameObject goblinHouse;
 
@@ -28,19 +29,14 @@ public class Goblin : MonoBehaviour
     {
         allObjects = GameObject.FindGameObjectsWithTag("gold");
 
-        /*
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("gold"))
-        {
-            allObjects.Add(obj);
-        }
-        */
+        // GameObject obj = GameObject.FindGameObjectWithTag("gold");
+        // allObjects.Add(obj);
 
         if (isSearching == true &&  allObjects.Length > 0 )
         {
             searchGold();
         }
 
-        // if (Input.GetKeyDown(KeyCode.Space)) { searchGold(); }
         if (isMoving == true && nearestObject != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, nearestObject.transform.position, movementSpeed * Time.deltaTime);
@@ -65,10 +61,12 @@ public class Goblin : MonoBehaviour
                 nearestDistance = distance;
             }
         }
+        
+        if (nearestObject != null) { 
+            nearestObject.gameObject.tag = "goldToPick"; 
+        }
         isSearching = false;
         isMoving = true;
-        if (nearestObject != null) { nearestObject.gameObject.tag = "goldToPick"; }
-
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -77,7 +75,18 @@ public class Goblin : MonoBehaviour
             isMoving = false;
             isStoring = true;
             goblinHouse.GetComponent<Collider2D>().enabled = true;
+            nearestDistance = 100;
             Destroy(other.gameObject);
+            for (int i = 0; i < allObjects.Length; i++)
+            {
+                if (allObjects[i] == null)
+                {
+                    // allObjects.RemoveAt(i);
+                    List<GameObject> gameObjectList = new List<GameObject>(allObjects);
+                    gameObjectList.RemoveAll(x => x == null);
+                    allObjects = gameObjectList.ToArray();
+                }
+            }
         }
         
         if (other.gameObject.tag == "goblinHut")
