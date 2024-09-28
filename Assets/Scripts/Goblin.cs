@@ -2,21 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using TMPro;
 public class Goblin : MonoBehaviour
 {
     public GameObject[] allObjects;
+    public GameObject[] untakenObjects;
     //public List<GameObject> gameObjectList = new List<GameObject>(allObjects);
 
     public GameObject nearestObject;
     public GameObject goblinHouse;
     public Animator _animator;
 
-    public Transform idleArea;
+    public TextMeshProUGUI goldCountText;
 
     float distance;
     float nearestDistance = 10000;
-    float movementSpeed = 2f;
+    public float movementSpeed = 2f;
     public bool isSearching = true;
     public bool isMoving = false;
     public bool isStoring = false;
@@ -132,8 +133,21 @@ public class Goblin : MonoBehaviour
             isSearching = true;
             goldCount++;
             Debug.Log(goldCount);
+            goldCountText.text = "Gold Collected: " + goldCount.ToString();
 
 
+        }
+
+        if (other.gameObject.tag == "arrow")
+        {
+            untakenObjects = GameObject.FindGameObjectsWithTag("goldToPick");
+            for (int i = 0; i < untakenObjects.Length; i++)
+            {
+                untakenObjects[i].tag = "gold";
+            }
+            _animator.SetBool("isWalking", false );
+            isSearching = true;
+            isStoring = false;
         }
     }
 
