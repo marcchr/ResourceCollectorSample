@@ -10,6 +10,9 @@ public class Goblin : MonoBehaviour
 
     public GameObject nearestObject;
     public GameObject goblinHouse;
+    public Animator _animator;
+
+    public Transform idleArea;
 
     float distance;
     float nearestDistance = 10000;
@@ -41,11 +44,13 @@ public class Goblin : MonoBehaviour
         if (isMoving == true && nearestObject != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, nearestObject.transform.position, movementSpeed * Time.deltaTime);
+            _animator.SetBool("isWalking", true);
         }
 
         if (isStoring == true)
         {
             transform.position = Vector3.MoveTowards(transform.position, goblinHouse.transform.position, movementSpeed * Time.deltaTime);
+            _animator.SetBool("isWalking", true);
         }
 
     }
@@ -92,6 +97,7 @@ public class Goblin : MonoBehaviour
         
         if (other.gameObject.tag == "goblinHut")
         {
+            _animator.SetBool("isWalking", false);
             goblinHouse.GetComponent<Collider2D>().enabled = false;
             isStoring = false;
             isSearching = true;

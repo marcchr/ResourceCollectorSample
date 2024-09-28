@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class Archer : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class Archer : MonoBehaviour
         onGrassCheck();
         shootInterval += Time.deltaTime;
 
-
         if (shootInterval > 2 && onGrass == true)
         {
             _animator.SetBool("isShooting", true);
@@ -35,8 +35,15 @@ public class Archer : MonoBehaviour
         else
         {
             _animator.SetBool("isShooting", false);
-
         }
+    }
+
+    void Aim()
+    {
+        Vector3 direction = goblin.transform.position - transform.position;
+
+        float rotation = Mathf.Atan2(-direction.y, -direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, rotation + 180);
     }
 
     void Shoot()
